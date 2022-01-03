@@ -37,6 +37,7 @@ const BookingForm = (props) => {
                 placeholder="From"
                 class="form-control"
                 onChange={props.onFromChangeHandler}
+                value={props.from}
               />
               <div class="label" id="from"></div>{" "}
               <span class="fas fa-dot-circle text-muted"></span>
@@ -49,6 +50,7 @@ const BookingForm = (props) => {
                 placeholder="To"
                 class="form-control"
                 onChange={props.onToChangeHandler}
+                value={props.to}
               />
               <div class="label" id="to"></div>{" "}
               <span class="fas fa-map-marker text-muted"></span>
@@ -62,6 +64,7 @@ const BookingForm = (props) => {
                 required
                 placeholder="Depart Date"
                 class="form-control"
+                
               />
               <div class="label" id="depart"></div>
             </div>
@@ -72,6 +75,7 @@ const BookingForm = (props) => {
                 required
                 placeholder="Return Date"
                 class="form-control"
+              
               />
               <div class="label" id="return"></div>
             </div>
@@ -84,6 +88,7 @@ const BookingForm = (props) => {
               placeholder="Traveller(s)"
               class="form-control"
               onChange={props.onNoOfTicketChangeHandler}
+              value={props.noOfTickets}
             />
             <div class="label" id="psngr"></div>{" "}
             <span class="fas fa-users text-muted"></span>

@@ -1,14 +1,31 @@
 import React, { Component } from "react";
-// import classes from "./login.module.css";
 import "./login.css";
 
-const Login = () => {
+const Signup = () => {
   return (
     <div className="shell">
       <div className="auth-wrapper">
         <div className="auth-inner">
           <form>
-            <h3>Sign In</h3>
+            <h3>Sign Up</h3>
+
+            <div className="form-group">
+              <label>First name</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First name"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Last name</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Last name"
+              />
+            </div>
 
             <div className="form-group">
               <label>Email address</label>
@@ -28,24 +45,11 @@ const Login = () => {
               />
             </div>
 
-            <div className="form-group">
-              <div className="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  className="custom-control-input"
-                  id="customCheck1"
-                />
-                <label className="custom-control-label" htmlFor="customCheck1">
-                  Remember me
-                </label>
-              </div>
-            </div>
-
             <button type="submit" className="btn btn-primary btn-block">
-              Submit
+              Sign Up
             </button>
             <p className="forgot-password text-right">
-              Forgot <a href="#">password?</a>
+              Already registered <a href="#">sign in?</a>
             </p>
           </form>
         </div>
@@ -54,4 +58,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
