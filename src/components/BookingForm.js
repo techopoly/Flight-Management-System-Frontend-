@@ -93,9 +93,14 @@ const BookingForm = (props) => {
             <div class="label" id="psngr"></div>{" "}
             <span class="fas fa-users text-muted"></span>
           </div>
-          <div class="form-group my-3">
+          <div class="form-group my-3" onClick={()=>{props.onSearch()}}>
             <div class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3">
               Search Flights{" "}
+            </div>
+          </div>
+          <div class="form-group my-3" onClick={() => props.onEditModalShowHandler()}>
+            <div class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3">
+              Add Flight{" "}
             </div>
           </div>
         </form>

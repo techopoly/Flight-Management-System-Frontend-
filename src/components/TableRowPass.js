@@ -3,37 +3,36 @@ import Table from "react-bootstrap/Table";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
-const TableRow = (props) => {
+const TableRowPass = (props) => {
   return (
     <tr>
-      <td>{props.to}</td>
+      <td>{props.pass_id}</td>
       <td>{props.flight_no}</td>
-      <td>{props.no_of_tickets}</td>
-      <td>{props.price}</td>
-      <td>{props.available_seats}</td>
+      <td>{props.bookedseats}</td>
+ 
       <td>
         {" "}
         <Button
           variant="primary"
           size="sm"
-          onClick={() => props.onBookHandler()}
-        >Book
-          {props.book}
+          onClick={() => props.cancelHandler(props.flight_no, props.pass_id)}
+        >
+          Cancel
         </Button>
       </td>
-      <td>
+      {/* <td>
         {props.isAdmin == true ? (
           <Button
             variant="primary"
             size="sm"
             onClick={() => props.onEditModalShowHandler(props.flight_no, props.rowInfo)}
           >
-            Edit
+            Cancel
           </Button>
         ) : null}
-      </td>
+      </td> */}
     </tr>
   );
 };
 
-export default TableRow;
+export default TableRowPass;

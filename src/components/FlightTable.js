@@ -1,9 +1,45 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import TableRow from "./TableRow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const FlightTable = (props) => {
+
+
+  useEffect(async () => {
+    const res = await axios.post(
+      "http://localhost:8050/allFlight",
+      {
+        email: props.email,
+        password: props.password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(res.data);
+    setRowInfo(res.data.data);
+  }, []);
+
+  // useEffect(async () => {
+  //   const res = await axios.post(
+  //     "http://localhost:8050/searchFlight",
+  //     {
+  //       destination: props.to
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   console.log(res.data);
+  //   setRowInfo(res.data.data);
+  // }, [props.search]);
+
   const [rowInfo, setRowInfo] = useState([
     {
       from: "Dhaka",
@@ -51,37 +87,36 @@ const FlightTable = (props) => {
     },
   ]);
 
-  const tableRowContent = rowInfo.map((eachRow, index) => {
-    return (
-      <TableRow
-        rowInfo = {rowInfo}
-        key={index}
-        from={eachRow.from}
-        to={eachRow.to}
-        flight_no={eachRow.flight_no}
-        no_of_tickets={eachRow.no_of_tickets}
-        price={eachRow.price}
-        total_seats={eachRow.total_seats}
-        available_seats={eachRow.available_seats}
-        book={eachRow.book}
-        onBookHandler={props.onBookHandler}
-        onEditModalShowHandler={props.onEditModalShowHandler}
-        isAdmin={props.isAdmin}
-      />
-    );
-  });
+    const tableRowContent = rowInfo.map((eachRow, index) => {
+      return (
+        <TableRow
+          rowInfo={rowInfo}
+          key={index}
+          from={eachRow.from}
+          to={eachRow.destination}
+          flight_no={eachRow.flight_no}
+          no_of_tickets={eachRow.seats}
+          price={eachRow.price}
+          total_seats={eachRow.total_seats}
+          available_seats={eachRow.seats}
+          book={eachRow.book}
+          onBookHandler={props.onBookHandler}
+          onEditModalShowHandler={props.onEditModalShowHandler}
+          isAdmin={props.isAdmin}
+        />
+      );
+    });
+
   console.log(tableRowContent);
 
   return (
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
-          <th>From</th>
           <th>To</th>
           <th>Flight No</th>
           <th>No of Tickets</th>
           <th>Price</th>
-          <th>Total Seats</th>
           <th>Available Seats</th>
           <th>Book seat</th>
           {props.isAdmin == true ? <th>Edit</th> : null}

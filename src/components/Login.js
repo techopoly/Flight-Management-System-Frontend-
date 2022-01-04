@@ -1,13 +1,40 @@
 import React, { Component } from "react";
 // import classes from "./login.module.css";
 import "./login.css";
+import axios from "axios";
+//Authorization: 'Bearer ' + token,
+const Login = (props) => {
+  const submitHandler = async (event) => {
+    event.preventDefault();
 
-const Login = () => {
+    const res = await axios.post(
+      "http://localhost:8050/login",
+      {
+        email: props.email,
+        password: props.password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(res.data);
+    props.setToken(res.data.token);
+    props.setToken((p) => {
+      console.log(p);
+      return p;
+    });
+    localStorage.setItem("isLoggedIn", "1");
+    localStorage.setItem('token', res.data.token)
+    props.setIsLoggedIn(true);;
+  };
+
   return (
     <div className="shell">
       <div className="auth-wrapper">
         <div className="auth-inner">
-          <form>
+          <form onSubmit={submitHandler}>
             <h3>Sign In</h3>
 
             <div className="form-group">
@@ -16,6 +43,10 @@ const Login = () => {
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
+                value={props.email}
+                onChange={(event) => {
+                  props.setEmail(event.target.value);
+                }}
               />
             </div>
 
@@ -25,6 +56,10 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 placeholder="Enter password"
+                value={props.password}
+                onChange={(event) => {
+                  props.setPassword(event.target.value);
+                }}
               />
             </div>
 

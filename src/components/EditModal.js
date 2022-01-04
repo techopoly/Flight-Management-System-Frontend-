@@ -1,8 +1,28 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import classes from "./BookingForm.module.css";
-
+import axios from "axios";
 const EditModal = (props) => {
+
+  const token = localStorage.getItem("token");
+
+  const onSubmitHandler = async () => {
+    const res = await axios.post(
+      "http://localhost:8050/updateFlight",
+      {
+        flight_no: props.editModalFlightNo,
+        seats: props.editModalAvailableSeats,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    console.log(res.data);
+  };
+
   return (
     <Modal
       {...props}
@@ -18,7 +38,7 @@ const EditModal = (props) => {
       <Modal.Body>
         <>
           <div className={`${classes.wrapper} ${classes["bg-white"]}`}>
-            <form action="#">
+            <form onSubmit={onSubmitHandler}>
               <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap">
                 {" "}
                 <label class="option my-sm-0 my-2">
@@ -44,20 +64,22 @@ const EditModal = (props) => {
                 <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 border-bottom position-relative">
                   {" "}
                   <label>
-                    From
+                    To
                     <input
                       type="text"
                       required
-                      placeholder="From"
+                      placeholder="Destination"
                       class="form-control"
-                      onChange={props.onFromChangeHandler}
-                      value={props.eachRow.from}
+                      onChange={(event) => {
+                        props.onEditModalTo(event.target.value);
+                      }}
+                      value={props.editModalTo}
                     />
                   </label>
                   <div class="label" id="from"></div>{" "}
                   <span class="fas fa-dot-circle text-muted"></span>
                 </div>
-                <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                {/* <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
                   {" "}
                   <label>
                     To
@@ -67,15 +89,15 @@ const EditModal = (props) => {
                       placeholder="To"
                       class="form-control"
                       onChange={props.onToChangeHandler}
-                      value={props.eachRow.to}
+                      value={props.eachRow != null? props.editModalTo: 'null'}
                     />
                   </label>
                   <div class="label" id="to"></div>{" "}
                   <span class="fas fa-map-marker text-muted"></span>
-                </div>
+                </div> */}
               </div>
               <div class="form-group d-sm-flex margin">
-                <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
+                {/* <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
                   {" "}
                   <input
                     type="date"
@@ -84,7 +106,7 @@ const EditModal = (props) => {
                     class="form-control"
                   />
                   <div class="label" id="depart"></div>
-                </div>
+                </div> */}
                 <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
                   {" "}
                   <input
@@ -100,14 +122,14 @@ const EditModal = (props) => {
                 <div class="form-group border-bottom d-flex align-items-center position-relative">
                   {" "}
                   <label>
-                    Total Seat
+                    Price
                     <input
                       type="text"
                       required
                       placeholder="Total Seats"
                       class="form-control"
-                      onChange={props.onNoOfTicketChangeHandler}
-                      value={props.eachRow.total_seats}
+                      onChange={props.onEditModalPrice}
+                      value={props.editModalPrice}
                     />
                   </label>
                   <label>
@@ -117,17 +139,36 @@ const EditModal = (props) => {
                       required
                       placeholder="Traveller(s)"
                       class="form-control"
-                      onChange={props.onNoOfTicketChangeHandler}
-                      value={props.eachRow.no_of_tickets}
+                      onChange={props.onEditModalAvailableSeats}
+                      value={props.editModalAvailableSeats}
+                    />
+                  </label>
+                  <label>
+                    Flight No
+                    <input
+                      type="text"
+                      required
+                      placeholder="Traveller(s)"
+                      class="form-control"
+                      onChange={(event) => {
+                        props.setEditModalFlightNo((p)=>{
+                          return event.target.value});
+                      }}
+                      value={props.editModalFlightNo}
                     />
                   </label>
                   <div class="label" id="psngr"></div>{" "}
                   <span class="fas fa-users text-muted"></span>
                 </div>
               </div>
-              <div class="form-group my-3">
+              <div class="form-group my-3" onClick={props.editFlight}>
                 <div class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3">
-                  Confirm{" "}
+                  Edit{" "}
+                </div>
+                <div class="form-group my-3" onClick={props.addFlight}>
+                  <div class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3">
+                    Add{" "}
+                  </div>
                 </div>
               </div>
             </form>
